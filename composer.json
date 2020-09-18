@@ -1,0 +1,14 @@
+{
+    "name": "lenovo/lltmstest4",
+    "authors": [
+        {
+            "name": "milancomi",
+            "email": "38693770+milancomi@users.noreply.github.com"
+        }
+    ],
+    "require": {
+        "google/apiclient": "2.0",
+        "larapack/dd": "^1.1",
+        "swiftmailer/swiftmailer": "^6.0"
+    }
+}
