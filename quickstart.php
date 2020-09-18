@@ -9,6 +9,7 @@ require __DIR__ . '/vendor/autoload.php';
  * Returns an authorized API client.
  * @return Google_Client the authorized client object
  */
+$locales = 'America/Los_Angeles';
 function getClient()
 {
     $client = new Google_Client();
@@ -58,7 +59,6 @@ function getClient()
     return $client;
 }
 
-
 // Validation 
 
 // header("content-type: application/json; charset=utf-8");
@@ -78,82 +78,65 @@ if(!(preg_match('/^[0-9]{6,}$/', $_GET['event_phone'])))
         exit();
 }
 
-
+$name  = $_GET['event_name'];
+$email = $_GET['event_mail'];
+$phone_numb = $_GET['event_phone'];
 $day = $_GET['event_day'];
 $time = $_GET['event_time'];
-
+$duration = $_GET['event_duration'];
 $start_date =date("c", strtotime($day.' '.$time));
 
 
 $end_date = new DateTime($start_date);
-$conv = $end_date->modify('+45 minutes');
+$conv = $end_date->modify('+'.$duration.'minutes');
 $end_date = $conv->format("c");
-
-
 
 // Get the API client and construct the service object.
 $client = getClient();
 $service = new Google_Service_Calendar($client);
 
 $event = new Google_Service_Calendar_Event(array(
-    'summary' => 'ccccccc',
-    'location' => '800 Howard St., San Francisco, CA 94103',
-    'description' => 'A chance to hear more about Google\'s developer products.',
+    'summary' => $name,
+    'description' => 'You can call number: '. $phone_numb . " for more infos :)",
     'start' => array(
       'dateTime' => $start_date,
-      'timeZone' => 'America/Los_Angeles',
+      'timeZone' => $locales,
     ),
     'end' => array(
       'dateTime' => $end_date,
-      'timeZone' => 'America/Los_Angeles',
+      'timeZone' => $locales,
     ),
     'recurrence' => array(
-      'RRULE:FREQ=DAILY;COUNT=2'
+      'RRULE:FREQ=DAILY;COUNT=1'
     ),
     'attendees' => array(
-      array('email' => 'lpage@example.com'),
-      array('email' => 'sbrin@example.com'),
+      array('email' => $email),
     ),
     'reminders' => array(
       'useDefault' => FALSE,
       'overrides' => array(
-        array('method' => 'email', 'minutes' => 24 * 60),
-        array('method' => 'popup', 'minutes' => 10),
+        array('method' => 'email', 'minutes' => 15),
+        array('method' => 'email', 'minutes' => 30),
       ),
     ),
   ));
 
+  
   $calendarId = 'primary';
 
 
-$event = $service->events->insert($calendarId, $event);
+  
+  $optParams2 = [
+    'sendNotifications'=>true
+  ];
+
+
+$event = $service->events->insert($calendarId, $event,$optParams2);
 
 if(isset($event->id))
 {
+
   $response = json_encode(['error_status'=>'1','data'=>'Event created successfully !!!']);
   echo $response;
-}
-// Print the next 10 events on the user's calendar.
-
-
-$optParams = array(
-  'maxResults' => 100,
-  'orderBy' => 'startTime',
-  'singleEvents' => true,
-  'timeMin' => date('c'),
-);
-$results = $service->events->listEvents($calendarId, $optParams);
-// $events = $results->getItems();
-
-if (empty($events)) {
-    print "No upcoming events found.\n";
-} else {
-    print "Upcoming events:\n";
-    foreach ($events as $event) {
-        $start = $event->start->dateTime;
-        if (empty($start)) {
-            $start = $event->start->date;
-        }
-        printf("%s (%s)\n", $event->getSummary(), $start);
-    }
+  exit();
 }
