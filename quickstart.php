@@ -81,12 +81,14 @@ if(!(preg_match('/^[0-9]{6,}$/', $_GET['event_phone'])))
 $name  = $_GET['event_name'];
 $email = $_GET['event_mail'];
 $phone_numb = $_GET['event_phone'];
+
+// Merge datetime fields
 $day = $_GET['event_day'];
 $time = $_GET['event_time'];
 $duration = $_GET['event_duration'];
 $start_date =date("c", strtotime($day.' '.$time));
 
-
+// Add duration for event
 $end_date = new DateTime($start_date);
 $conv = $end_date->modify('+'.$duration.'minutes');
 $end_date = $conv->format("c");
@@ -94,6 +96,7 @@ $end_date = $conv->format("c");
 // Get the API client and construct the service object.
 $client = getClient();
 $service = new Google_Service_Calendar($client);
+
 
 $event = new Google_Service_Calendar_Event(array(
     'summary' => $name,
