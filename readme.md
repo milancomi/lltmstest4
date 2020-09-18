@@ -13,6 +13,11 @@ For backend part of test i used PHP to validate some data, and fire event create
 git clone https://github.com/milancomi/lltmstest4.git
 composer update 
 ```
+# GMAIL Calendar Account Infos
+username: kalendartestapi@gmail.com
+password: sifrasifra
+
+If you want to login and check solution.
 
 # PHP version problems; I tried 7.2 and 7.4 and both gave me same warning
 
