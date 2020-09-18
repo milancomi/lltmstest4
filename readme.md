@@ -5,9 +5,9 @@ For backend part of test i used PHP to validate some data, and fire event create
 
 ### Installing
 
-1.
-mkdir on your localhost service, cd into and use commands bellow
+1. mkdir on your localhost service, cd into and use commands bellow
 
+2. Run commands in terminal
 
 ```
 git clone https://github.com/milancomi/lltmstest4.git
