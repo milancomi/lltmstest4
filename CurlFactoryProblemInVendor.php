@@ -65,7 +65,11 @@ class CurlFactory implements CurlFactoryInterface
         unset($easy->handle);
 
         // if (count($this->handles) >= $this->maxHandles) { // OLD
+            // ERROR
             
+            // Warning: count(): Parameter must be an array or an object that implements Countable in C:\laragon\www\lltmstest4\vendor\guzzlehttp\guzzle\src\Handler\CurlFactory.php on line 67
+
+
         if (($this->handles ? count($this->handles) : 0) >= $this->maxHandles) {            // UPDATED !!!!!
             curl_close($resource);
         } else {

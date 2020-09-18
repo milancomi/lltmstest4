@@ -1,87 +1,34 @@
-# Project Title
+# Google Calendar Api
+Home Test solution for Fullstack developer position
+For backend part of test i used PHP to validate some data, and fire event create api to Google Calendar.
 
-One Paragraph of project description goes here
-
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
-### Prerequisites
-
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
+1.
+mkdir on your localhost service, cd into and use commands bellow
 
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
 
 ```
-until finished
+git clone https://github.com/milancomi/lltmstest4.git
+composer update 
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+# PHP version problems; I tried 7.2 and 7.4 and both gave me same warning
 
-## Running the tests
+Warning: count(): Parameter must be an array or an object that implements Countable in C:\laragon\www\lltmstest4\vendor\guzzlehttp\guzzle\src\Handler\CurlFactory.php on line 67
 
-Explain how to run the automated tests for this system
 
-### Break down into end to end tests
-
-Explain what these tests test and why
+I found only one (not excelent) solution to solve that problem:
 
 ```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
+1.  \vendor\guzzlehttp\guzzle\src\Handler\CurlFactory.php on line 67
+2. // if (count($this->handles) >= $this->maxHandles) { // OLD
+3. Change with this line below
+4. if (($this->handles ? count($this->handles) : 0) >= $this->maxHandles) {            // UPDATED !!!!!
 
 ```
-Give an example
-```
 
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
-## Authors
-
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+# Conclusion
+I wasn't sure whick one technology stack i should use, because it is not written in the task descriptiion.
+Is the emphasis on frameworks or vanila/core codding.
